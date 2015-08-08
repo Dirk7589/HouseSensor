@@ -6,7 +6,7 @@ void initReceiver(){
     initComms();
 }
 
-uint8_t receiverPacket(uint8_t address){
+void receiverAndForwardPacket(){
    uint8_t frame[3];
    
    /*Blocking call that does not return until it has data*/
@@ -15,9 +15,11 @@ uint8_t receiverPacket(uint8_t address){
             frame[i] = getch();
         }
         //checksum
-        if((frame[2] == (frame[0]+frame[1])) && frame[0] == address){
-            return frame[1];
+        if((frame[2] == (frame[0]+frame[1]))){
+            putch(SYNC);
+            putch(frame[0]);
+            putch(frame[1]);
+            return;
         }
    }
-   return 0;
 }

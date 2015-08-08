@@ -23,10 +23,7 @@ int main() {
     init16f88();
     initReceiver();
     while(1){
-        uint8_t data = 0;
-        data = receiverPacket('0');
-        putch(data);
-        //getche();
+        receiverAndForwardPacket();
     }
     return (EXIT_SUCCESS);
 }
