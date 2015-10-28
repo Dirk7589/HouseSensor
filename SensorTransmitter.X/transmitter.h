@@ -18,6 +18,11 @@ extern "C" {
     
 #define SYNC 0x28
     
+/*Address mapping
+ * 0 to 50 reserved for temperature
+ * 50 to 100 reserved for rangers
+ */
+    
 void initTransmitter();
 void sendPacket(uint8_t address, uint8_t data);
 #ifdef	__cplusplus

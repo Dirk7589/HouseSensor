@@ -53,6 +53,8 @@ extern "C" {
  * Initalizes the communications
  */
 void initComms();
+void transmitOff();
+void transmitOn();
 void putch(unsigned char);
 unsigned char getch(void);
 unsigned char getche(void);

@@ -15,7 +15,9 @@ extern "C" {
 
 #define _XTAL_FREQ 4000000
 
-#define STATUS_LED PORTBbits.RB3
+#define POWER_LED PORTAbits.RA0
+#define TRANSMIT_LED PORTAbits.RA1
+#define TEMPERATURE_PROBE 0 //Selects Analog channel 0
     
 #ifdef	__cplusplus
 }
