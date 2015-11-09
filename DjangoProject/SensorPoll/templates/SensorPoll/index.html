@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<div class="container">
+<h1>SensorPoll</h1>
+
+{% for packet in packets %}
+	<ul>
+
+		<li> {{packet.address}}</li>
+		<li> {{packet.time_stamp}}</li>
+		<li> {{packet.data}}</li>
+	
+	</ul>
+{% endfor %}
+</div>

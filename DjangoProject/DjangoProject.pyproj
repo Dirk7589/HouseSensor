@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73bbfb7e-8e90-4037-b618-c8f836cffcc2}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+    <CommandLineArguments>runserver</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DjangoProject\settings.py" />
+    <Compile Include="DjangoProject\urls.py" />
+    <Compile Include="DjangoProject\wsgi.py" />
+    <Compile Include="DjangoProject\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="SensorPoll\admin.py" />
+    <Compile Include="SensorPoll\migrations\0001_initial.py" />
+    <Compile Include="SensorPoll\migrations\__init__.py" />
+    <Compile Include="SensorPoll\models.py" />
+    <Compile Include="SensorPoll\tests.py" />
+    <Compile Include="SensorPoll\urls.py" />
+    <Compile Include="SensorPoll\views.py" />
+    <Compile Include="SensorPoll\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DjangoProject" />
+    <Folder Include="SensorPoll" />
+    <Folder Include="SensorPoll\migrations" />
+    <Folder Include="SensorPoll\static\" />
+    <Folder Include="SensorPoll\static\SensorPoll\" />
+    <Folder Include="SensorPoll\templates\" />
+    <Folder Include="SensorPoll\templates\SensorPoll\" />
+    <Folder Include="templates\" />
+    <Folder Include="templates\admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SensorPoll\static\SensorPoll\bootstrap-theme.min.css" />
+    <Content Include="SensorPoll\static\SensorPoll\bootstrap.min.css" />
+    <Content Include="SensorPoll\templates\SensorPoll\index.html" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
