@@ -1,4 +1,4 @@
-"""DjangoProject URL Configuration
+﻿"""DjangoProject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -14,9 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 
 urlpatterns = [
-	url(r'SensorPoll/', include('SensorPoll.urls')),
+    url(r'^', include('SensorPoll.urls')),
+	url(r'^SensorPoll/', include('SensorPoll.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

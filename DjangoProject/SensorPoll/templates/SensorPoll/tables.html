@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block tablesButton %}
+    class="active"
+{% endblock %}
+
+{% block pageHeader %}
+    Tables
+    <small>Subheading</small>
+{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <i class="fa fa-dashboard"></i>  <a href="{% url 'index' %}">Dashboard</a>
+</li>
+<li class="active">
+    <i class="fa fa-table"></i> Tables
+</li>
+{% endblock %}
+
+{% block row %}
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Bordered with Striped Rows</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Packet Address</th>
+                        <th>Packet Time</th>
+                        <th>Packet data</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for packet in packets %}
+                    <tr>
+
+                        <td> {{packet.address}}</td>
+                        <td> {{packet.time_stamp}}</td>
+                        <td> {{packet.data}}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+{% endblock %}
+
+
