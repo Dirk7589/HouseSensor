@@ -55,44 +55,44 @@ class ReceivedPacket:
 lastPacket = None
 
 #Main function, always running
-#try:
-while True:
+try:
+	while True:
 
-	received = port.read()
-		
-	value = ord(received)
-	syncChar = 40 #The synchronizing character is '('
-	
-	#check for synchronizing character
-	if value == syncChar:
-		buffer = port.read(packetSize)
-		packet = []
-		
-		#create the packet in proper format 'address'+'data'+'checksum'
-		for i in xrange(packetSize):
-			packet.append(ord(buffer[i]))
-				
-		checksum = 0
-		#add address to data to compute checksum
-		for i in xrange(len(packet)-1):
-			checksum += packet[i]
-		
-		#compare computed checksum to received checksum
-		if packet[len(packet)-1] == checksum:
-			#instantiate Packet object
-			currentPacket = ReceivedPacket(packet)
-			print('we got a live one')
-			#check for packet duplicity
-			if currentPacket.isDifferentThan(lastPacket):
-				#create packet to write to django DB
-				pack = SensorPacket(address= currentPacket.getAddress(),  data= currentPacket.getData())
-				pack.save()
-				print('and we brought her in')
-				#save packet for next cycle check
-				lastPacket = currentPacket
+		received = port.read()
 			
+		value = ord(received)
+		syncChar = 40 #The synchronizing character is '('
+		
+		#check for synchronizing character
+		if value == syncChar:
+			buffer = port.read(packetSize)
+			packet = []
+			
+			#create the packet in proper format 'address'+'data'+'checksum'
+			for i in xrange(packetSize):
+				packet.append(ord(buffer[i]))
+					
+			checksum = 0
+			#add address to data to compute checksum
+			for i in xrange(len(packet)-1):
+				checksum += packet[i]
+			
+			#compare computed checksum to received checksum
+			if packet[len(packet)-1] == checksum:
+				#instantiate Packet object
+				currentPacket = ReceivedPacket(packet)
+				print('we got a live one')
+				#check for packet duplicity
+				if currentPacket.isDifferentThan(lastPacket):
+					#create packet to write to django DB
+					pack = SensorPacket(address= currentPacket.getAddress(),  data= currentPacket.getData())
+					pack.save()
+					print('and we brought her in')
+					#save packet for next cycle check
+					lastPacket = currentPacket
 				
-#except:
-#	sys.exit(1)
 				
-#sys.exit(0)
+except:
+	sys.exit(1)
+				
+sys.exit(0)
