@@ -45,6 +45,21 @@
                 </tbody>
             </table>
         </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if packets.has_previous %}
+                <a class="btn btn-default" href="?page={{ packets.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ packets.number }} of {{ packets.paginator.num_pages }}.
+                </span>
+
+                {% if packets.has_next %}
+                <a class="btn btn-default" href="?page={{ packets.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
 </div>
 <!-- /.row -->
