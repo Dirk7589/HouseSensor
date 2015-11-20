@@ -14,7 +14,7 @@ def index(request):
 def tables(request):
     template = loader.get_template('SensorPoll/tables.html')
     packets_list = SensorPacket.objects.all()
-    paginator = Paginator(packets_list, 10)
+    paginator = Paginator(packets_list, 25)
     page = request.GET.get('page')
     try:
         packets = paginator.page(page)
