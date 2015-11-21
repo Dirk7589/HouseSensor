@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.template import RequestContext, loader
 from .models import SensorPacket
+from .models import AveragedData
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
@@ -29,8 +30,10 @@ def tables(request):
 
 def charts(request):
     template = loader.get_template('SensorPoll/charts.html')
-    packets = SensorPacket.objects.all()
-    context = RequestContext(request, {'packets':packets,})
+    #packets = SensorPacket.objects.all()
+    averaged_packs = AveragedData.objects.all()
+    #context = RequestContext(request, {'packets':packets,})
+    context = RequestContext(request, {'averaged_packs':averaged_packs,})
     return HttpResponse(template.render(context))
 
 

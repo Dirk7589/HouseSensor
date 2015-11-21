@@ -40,7 +40,7 @@
             // Chart data records -- each entry in this array corresponds to a point on
             // the chart.
             data: [
-                {% for packet in packets %}
+                {% for packet in averaged_packs %}
                     {time: '{{packet.time_stamp|date:"c"}}', value: {{packet.data}} },
                 {% endfor %}
             ],
