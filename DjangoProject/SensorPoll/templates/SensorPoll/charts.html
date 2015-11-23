@@ -51,7 +51,23 @@
             // Labels for the ykeys -- will be displayed when you hover over the
             // chart.
             labels: ['Value'],
-            postUnits: "&deg;C",
+            postUnits: String.fromCharCode(176) + "C",
+            dateFormat: function (x) { 
+                var monthNames = [
+                  "January", "February", "March",
+                  "April", "May", "June", "July",
+                  "August", "September", "October",
+                  "November", "December"
+                ];
+                var date = new Date(x); 
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+                minute = ("0" + minute).slice(-2);
+                var month = date.getMonth();
+                var day = date.getDate();
+                var year = date.getFullYear();
+                return (hour +":"+minute + " " + monthNames[month] + " " + day +", " + year);
+            },
             resize: true
         });
     });
