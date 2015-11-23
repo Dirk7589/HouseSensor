@@ -19,51 +19,61 @@
 #define SAMPLE_SIZE 10
 #define PACKET_ADDRESS 1
 void init16f88();
-uint8_t readTemperatureSensor();
+float readTemperatureSensor();
 
 int main() {
     init16f88();
     initTransmitter();
-    adcInit(2);
+    adcInit(TEMPERATURE_PROBE);
     while(1){
-        TRANSMIT_LED = 1;
-        
+        TEMPERATURE_POWER = 1;
         float temperature = 0;
+        float temperatureToTransmit = 0;
         for(int i = 0; i < SAMPLE_SIZE; i++){
             temperature = readTemperatureSensor() +temperature;
         }
-        temperature = temperature/SAMPLE_SIZE;
-   
-        sendPacket(PACKET_ADDRESS, temperature);
+        TEMPERATURE_POWER = 0;
+        //getting average and then multiply by 10 to preserve miliunits, which is then back converted on receiver
+        temperatureToTransmit = (temperature/SAMPLE_SIZE)*10;
         
-        SWDTEN = 1; //Enable watchdog timer
-        TRANSMIT_LED = 0; 
+        TRANSMITTER_SWITCH = 1;
+        for(int i = 0; i < 10; i ++){
+            sendPacket(1, (uint16_t)temperatureToTransmit);   
+        }
+        TRANSMITTER_SWITCH = 0;
+        
+        SWDTEN = 1; //Enable watchdog timer to sleep for about 45sec
         SLEEP(); //Sleep
-        SWDTEN = 0; //Disable watchdog timer
+        SLEEP();
+        SLEEP();
+        SLEEP();
+        SLEEP();
+        SLEEP();
+        SWDTEN = 0;  //Disable watchdog timer
     }
     return (EXIT_SUCCESS);
 }
 
 void init16f88(){
-    OSCCON = 0b01101110;
+    OSCCON = 0b01101110; //1 MHz
     TRISA = 0;
     TRISB = 0;
     ANSEL = 0;
     PORTA = 0;
     PORTB = 0;
     
-    //Setup watchdog prescaler
+    //Setup watchdog pre-scaler
     WDTPS3 = 0;
     WDTPS2 = 1;
     WDTPS1 = 1;
     WDTPS0 = 0;
-    
-    POWER_LED = 1; //Turn on power led
+    TRISBbits.TRISB3 = 0;
 }
 
-uint8_t readTemperatureSensor(){
+float readTemperatureSensor(){
     uint16_t value = adcRead();
-    float voltage = (value * 5000)/1024; //outputs mV/10
-    float temperature = (voltage - 500)/10; //outputs degrees celcius
-    return (uint8_t)temperature;
+    float voltage = value * 0.0048828125; //outputs mV
+    float temperature = 0;
+    temperature = (107*voltage - 57); //outputs degrees celcius
+    return temperature;
 }

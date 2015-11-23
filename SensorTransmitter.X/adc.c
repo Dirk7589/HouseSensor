@@ -81,9 +81,8 @@ void adcInit(uint8_t channel)
 			CHS2 = 0;
 		break;
 	}
-    TRISAbits.TRISA3 = 1;
-    ANS3 = 1;
-    VCFG1 = 1;
+    
+    VCFG1 = 0;
 	VCFG0 = 0;
     ADFM = 1;
 	ADON = 1; 			//Turn on the ADC
