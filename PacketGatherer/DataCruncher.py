@@ -29,7 +29,7 @@ for i in xrange(1,numberOfSensors+1):
 	
 	#average the data only if a sensor has data to average
 	if len(entries_to_avg) != 0:
-		data_avg = sum(d['data'] for d in entries_to_avg)/ float(len(entries_to_avg))
+		data_avg = sum(d['data'] for d in entries_to_avg)/ len(entries_to_avg)
 		
 		#form the data into the django model and save it as such
 		calculatedAverage = AveragedData(address = i, data = data_avg)

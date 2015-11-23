@@ -24,7 +24,7 @@ extern "C" {
  */
     
 void initTransmitter();
-void sendPacket(uint8_t address, uint8_t data);
+void sendPacket(uint8_t address, uint16_t data);
 #ifdef	__cplusplus
 }
 #endif
