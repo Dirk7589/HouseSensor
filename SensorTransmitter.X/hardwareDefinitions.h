@@ -15,9 +15,9 @@ extern "C" {
 
 #define _XTAL_FREQ 4000000
 
-#define TEMPERATURE_PROBE 2 //Selects Analog channel for the temperature probe
-#define TRANSMITTER_SWITCH PORTBbits.RB3
-#define TEMPERATURE_POWER PORTAbits.RA7
+#define TEMPERATURE_PROBE 3 //Selects Analog channel for the temperature probe
+#define TRANSMITTER_SWITCH PORTBbits.RB6
+#define TEMPERATURE_POWER PORTAbits.RA2
 #ifdef	__cplusplus
 }
 #endif
