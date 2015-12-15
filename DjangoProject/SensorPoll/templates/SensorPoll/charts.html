@@ -41,16 +41,16 @@
             // the chart.
             data: [
                 {% for packet in averaged_packs %}
-                    {time: '{{packet.time_stamp|date:"c"}}', value: {{packet.data}} },
+                    {time: '{{packet.time_stamp|date:"c"}}', '{{packet.address}}': {{packet.data}} },
                 {% endfor %}
             ],
             // The name of the data record attribute that contains x-values.
             xkey: 'time',
             // A list of names of data record attributes that contain y-values.
-            ykeys: ['value'],
+            ykeys: ['1', '2'],
             // Labels for the ykeys -- will be displayed when you hover over the
             // chart.
-            labels: ['Value'],
+            labels: ['Sensor 1', 'Sensor 2'],
             postUnits: String.fromCharCode(176) + "C",
             dateFormat: function (x) { 
                 var monthNames = [
