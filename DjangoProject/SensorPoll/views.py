@@ -1,14 +1,40 @@
 ﻿from django.http import Http404
 from django.shortcuts import render
 from .models import SensorPacket
-from .models import AveragedData
+from .models import AveragedData, ActiveSensors
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
+from .forms import ActiveSensorsForm
 
 def index(request):
-	packets = SensorPacket.objects.all()
-	context = {'packets':packets,}
-	return render(request, 'SensorPoll/index.html', context)
+    form = ActiveSensorsForm()
+    packets = SensorPacket.objects.all()
+    activeSensors = ActiveSensors.objects.all().order_by('Sensor_number')
+    polledSensors = SensorPacket.objects.values('address').distinct().order_by('address')
+    context = {'packets':packets, 'activeSensors':activeSensors, 'polledSensors':polledSensors,'form':form}
+
+    if request.method == "POST":
+        if request.POST['submit']=='removeSensor':
+            try:
+                sensorId = request.POST['Sensor_selected'].split(":")
+                toDelete = ActiveSensors.objects.get(Sensor_number=sensorId[0])
+                toDelete.delete()
+            except:
+                raise Http404("Could not delete sensor")
+
+        elif request.POST['submit']=='addSensor':
+            try:
+                activeSensor = ActiveSensors.objects.get(Sensor_number=request.POST['Sensor_number'])
+                activeSensor.Sensor_name=request.POST['Sensor_name']
+                activeSensor.save()
+            except:
+                newSensor = ActiveSensorsForm(request.POST)
+                if newSensor.is_valid():
+                    newSensor.save()
+    else:
+        form = ActiveSensorsForm()
+
+    return render(request, 'SensorPoll/index.html', context)
 
 def tables(request):
 
