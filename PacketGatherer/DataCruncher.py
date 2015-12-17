@@ -10,21 +10,25 @@ from django.conf import settings
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
-
 #import Django models:
-
 from SensorPoll.models import SensorPacket
 from SensorPoll.models import AveragedData
+from SensorPoll.models import ActiveSensors
 
 
-numberOfSensors = 1
+#debug mode
+debug = True
+
+
+
+activeSensorsList = ActiveSensors.objects.values_list('Sensor_number', flat=True).distinct().order_by('Sensor_number')
 #Main function
 
 #uncomment the try function when done playing around
 #try:
 	
-for i in xrange(1,numberOfSensors+1):
-	sensor_entries = SensorPacket.objects.filter(address=i)
+for sensorAddress in activeSensorsList:
+	sensor_entries = SensorPacket.objects.filter(address = sensorAddress)
 	entries_to_avg = sensor_entries.values('data')
 	
 	#average the data only if a sensor has data to average
@@ -32,13 +36,14 @@ for i in xrange(1,numberOfSensors+1):
 		data_avg = sum(d['data'] for d in entries_to_avg)/ len(entries_to_avg)
 		
 		#form the data into the django model and save it as such
-		calculatedAverage = AveragedData(address = i, data = data_avg)
+		calculatedAverage = AveragedData(address = sensorAddress, data = data_avg)
 		calculatedAverage.save()
 		#delete the original data which is no longer needed
 		sensor_entries.delete()
 		
-	
-	
+#activate cleanup if debug is off
+if !debug:
+	SensorPacket.objects.all().delete()
 	
 				
 #except:
