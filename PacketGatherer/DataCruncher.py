@@ -42,7 +42,7 @@ for sensorAddress in activeSensorsList:
 		sensor_entries.delete()
 		
 #activate cleanup if debug is off
-if !debug:
+if not debug:
 	SensorPacket.objects.all().delete()
 	
 				
