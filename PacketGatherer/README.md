@@ -31,7 +31,7 @@ DataCruncher files should be kept in /home/pi/bin/
 
 They are setup and managed by cron using: 
 
-sudo crotab -e (to edit)
+sudo crontab -e (to edit)
 
 or
 

@@ -35,8 +35,7 @@ for sensorAddress in activeSensorsList:
 		calculatedAverage = DailyAverageSensorData(address = sensorAddress, data = data_avg)
 		calculatedAverage.save()
 
-        #delete the original data which is no longer needed
-		sensor_entries.delete()
+
 
 #activate cleanup if debug is off
 if not debug:
