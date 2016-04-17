@@ -1,7 +1,7 @@
 ﻿from django.http import Http404
 from django.shortcuts import render
 from .models import SensorPacket
-from .models import AveragedData, ActiveSensors
+from .models import AveragedData, ActiveSensors, HourlySensorData
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from .forms import ActiveSensorsForm
@@ -55,8 +55,9 @@ def tables(request):
 
 def charts(request):
     
+    hourly_packs = HourlySensorData.objects.all()
     averaged_packs = AveragedData.objects.all()
-    context = {'averaged_packs':averaged_packs,}
+    context = {'averaged_packs':averaged_packs,'hourly_packs':hourly_packs,}
     return render(request, 'SensorPoll/charts.html', context)
 
 

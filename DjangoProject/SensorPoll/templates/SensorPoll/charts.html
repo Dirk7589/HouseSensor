@@ -36,7 +36,7 @@
     $(function () {
         new Morris.Line({
             // ID of the element in which to draw the chart.
-            element: 'mychart',
+            element: 'Quarter Hour Data',
             // Chart data records -- each entry in this array corresponds to a point on
             // the chart.
             data: [
@@ -60,6 +60,46 @@
                   "November", "December"
                 ];
                 var date = new Date(x); 
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+                minute = ("0" + minute).slice(-2);
+                var month = date.getMonth();
+                var day = date.getDate();
+                var year = date.getFullYear();
+                return (hour +":"+minute + " " + monthNames[month] + " " + day +", " + year);
+            },
+            resize: true
+        });
+    });
+</script>
+<script>
+    $(function () {
+        new Morris.Line({
+            // ID of the element in which to draw the chart.
+            element: 'Hourly Data',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+                {% for packet in hourly_packs %}
+                    {time: '{{packet.time_stamp|date:"c"}}', '{{packet.address}}': {{packet.data}} },
+                {% endfor %}
+            ],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'time',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['1', '2'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Sensor 1', 'Sensor 2'],
+            postUnits: String.fromCharCode(176) + "C",
+            dateFormat: function (x) {
+                var monthNames = [
+                  "January", "February", "March",
+                  "April", "May", "June", "July",
+                  "August", "September", "October",
+                  "November", "December"
+                ];
+                var date = new Date(x);
                 var hour = date.getHours();
                 var minute = date.getMinutes();
                 minute = ("0" + minute).slice(-2);
