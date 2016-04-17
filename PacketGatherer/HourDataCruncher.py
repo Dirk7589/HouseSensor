@@ -2,10 +2,11 @@
 
 import sys
 import os
-import datetime
+from datetime import timedelta
 sys.path.append(os.path.join(os.path.dirname(__file__), '/home/pi/HouseSensor/DjangoProject'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoProject.settings')
 from django.conf import settings
+from django.utils import timezone
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
@@ -19,14 +20,13 @@ activeSensorsList = AveragedData.objects.values_list('address', flat=True).disti
 
 #uncomment the try function when done playing around
 #try:
-now = datetime.datetime.now()
-hour_ago = now - datetime.timedelta(hours = 1)
+now = timezone.now()
+hour_ago = now - timedelta(hours = 1)
 
 	
 for sensorAddress in activeSensorsList:
 
-	sensor_entries = AveragedData.objects.filter(address = sensorAddress)
-	sensor_entries = sensor_entries.objects.filter(time_stamp__range = (hour_ago,now))
+	sensor_entries = AveragedData.objects.filter(address = sensorAddress, time_stamp__range = (hour_ago,now))
 	entries_to_avg = sensor_entries.values('data')
 	
 	#average the data only if a sensor has data to average
