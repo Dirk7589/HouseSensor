@@ -1,9 +1,7 @@
-#!usr/bin/env python
+﻿#!usr/bin/env python
 
-import serial
 import sys
 import os
-import time
 sys.path.append(os.path.join(os.path.dirname(__file__), '/home/pi/HouseSensor/DjangoProject'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoProject.settings')
 from django.conf import settings
@@ -49,4 +47,4 @@ if not debug:
 #except:
 #	sys.exit(1)
 				
-#sys.exit(0)
+sys.exit(0)
