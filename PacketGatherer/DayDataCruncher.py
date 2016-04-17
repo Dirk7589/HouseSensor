@@ -40,7 +40,7 @@ for sensorAddress in activeSensorsList:
 
 #activate cleanup if debug is off
 if not debug:
-	SensorPacket.objects.all().delete()
+	AveragedData.objects.all().delete()
 		
 				
 #except:
