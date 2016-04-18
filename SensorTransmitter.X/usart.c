@@ -10,9 +10,11 @@ void initComms(){
 
 void transmitOff(){
     TXEN = 0;
+    SPEN = 0;
 }
 
 void transmitOn(){
+    SPEN = 1;
     TXEN = 1;
 }
 
