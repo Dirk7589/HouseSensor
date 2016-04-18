@@ -2,7 +2,13 @@
 
 from .models import SensorPacket
 from .models import AveragedData
+from .models import ActiveSensors
+from .models import HourlySensorData
+from .models import DailyAverageSensorData
 
-admin.site.register(SensorPacket)
 # Register your models here.
+admin.site.register(SensorPacket)
 admin.site.register(AveragedData)
+admin.site.register(ActiveSensors)
+admin.site.register(HourlySensorData)
+admin.site.register(DailyAverageSensorData)

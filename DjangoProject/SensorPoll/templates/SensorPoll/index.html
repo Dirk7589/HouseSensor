@@ -6,12 +6,103 @@
 
 {% block pageHeader %}
     Dashboard
-    <small>Subheading</small>
+<small>Subheading</small>
 {% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        <i class="fa fa-dashboard"></i>  <a href="{% url 'index' %}">Dashboard</a>
-    </li>
+<li class="active">
+    <i class="fa fa-dashboard"></i>  <a href="{% url 'index' %}">Dashboard</a>
+</li>
 {% endblock %}
 
+{% block row %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Active Sensors</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sensor #</th>
+                                    <th>Sensor Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sensor in activeSensors %}
+                                <tr>
+                                    <td> {{sensor.Sensor_number}}</td>
+                                    <td> {{sensor.Sensor_name}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Sensor</h3>
+            </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form role="form" method="POST">
+                            {% csrf_token %}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Sensor #</label>
+                                    <select class="form-control" id="id_Sensor_number" type="number" name="Sensor_number">
+                                        {% for sensor in polledSensors %}
+                                        <option>{{sensor.address}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+
+                                <div class="form-group">
+                                    <label>Sensor name</label>
+                                    <input id="id_Sensor_name" class="form-control" placeholder="Enter sensor name" required type="text" name="Sensor_name" maxlength="100"/>
+                                </div>
+                                <button value="addSensor" name="submit" class="btn btn-default pull-right" type="submit">Add Sensor</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Remove Sensor</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form role="form" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Sensor</label>
+                                <select class="form-control" id="id_Sensor_selected" type="number" name="Sensor_selected">
+                                    {% for sensor in activeSensors %}
+                                    <option>{{sensor.Sensor_number}}: {{sensor.Sensor_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button value="removeSensor" name="submit" class="btn btn-default pull-right" type="submit">Remove Sensor</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
