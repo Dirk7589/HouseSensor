@@ -17,7 +17,7 @@ extern "C" {
     
 #define TEMPERATURE_PROBE 10 //Selects Analog channel for the temperature probe
 #define TRANSMITTER_SWITCH PORTBbits.RB6
-#define TEMPERATURE_POWER PORTAbits.RA2
+#define TEMPERATURE_POWER PORTCbits.RC0
 #define ON 1
 #define OFF 0
 #ifdef	__cplusplus

@@ -50,6 +50,7 @@ int main() {
         TEMPERATURE_POWER = ON; 
         float temperature = 0;
         float temperatureToTransmit = 0;
+        __delay_ms(20);
         for(int i = 0; i < SAMPLE_SIZE; i++){
             temperature = readTemperatureSensor() +temperature;
         }
@@ -66,7 +67,9 @@ int main() {
         }
         TRANSMITTER_SWITCH = OFF;
         transmitOff();
-        sleepTime(5);
+        
+        sleepTime(1);
+        
     }
     return (EXIT_SUCCESS);
 }
@@ -87,10 +90,10 @@ void init16lf599(){
 }
 
 float readTemperatureSensor(){
-    uint16_t value = adcRead();
-    float voltage = value * 0.0048828125; //outputs mV
+    uint16_t value = adcRead();//assumes adc 3V/10bit
+    float voltage = value * 2.9296875; //outputs mV
     float temperature = 0;
-    temperature = (107*voltage - 57); //outputs degrees celcius
+    temperature = (.1*voltage - 50); //outputs degrees celcius
     return temperature;
 }
 
@@ -100,7 +103,7 @@ void sleepTime(uint8_t timeInMinutes){
     uint16_t numberOfSleeps = timeInSeconds;
     
     SWDTEN = 1; //Enable watchdog timer to sleep for about 1sec
-    for(uint16_t i = 0; i < numberOfSleeps; i++){
+    for(uint16_t i = 0; i < numberOfSleeps + PACKET_ADDRESS; i++){
         SLEEP();
     }
     SWDTEN = 0;  //Disable watchdog timer
