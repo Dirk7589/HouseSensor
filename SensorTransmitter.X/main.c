@@ -39,6 +39,7 @@
 void init16lf599();
 float readTemperatureSensor();
 void sleepTime(uint8_t timeInMinutes);
+uint16_t performMeasurement();
 
 int main() {
     init16lf599();
@@ -46,24 +47,12 @@ int main() {
     adcInit(TEMPERATURE_PROBE);
     while(1){
         //Measurement portion
-        ADCON0bits.AD1ON = ON; //adc on
-        TEMPERATURE_POWER = ON; 
-        float temperature = 0;
-        float temperatureToTransmit = 0;
-        __delay_ms(20);
-        for(int i = 0; i < SAMPLE_SIZE; i++){
-            temperature = readTemperatureSensor() +temperature;
-        }
-        TEMPERATURE_POWER = OFF;
-        ADCON0bits.AD1ON = OFF; //adc off
-        //getting average and then multiply by 10 to preserve miliunits, which is then back converted on receiver
-        temperatureToTransmit = (temperature/SAMPLE_SIZE)*10;
-        
+        uint16_t valueToTransmit = performMeasurement();
         //Communications portion
         transmitOn();
         TRANSMITTER_SWITCH = ON;
         for(int i = 0; i < RETRANSMIT; i ++){
-            sendPacket(PACKET_ADDRESS, (uint16_t)temperatureToTransmit);   
+            sendPacket(PACKET_ADDRESS, valueToTransmit);   
         }
         TRANSMITTER_SWITCH = OFF;
         transmitOff();
@@ -87,6 +76,23 @@ void init16lf599(){
     
     TRISBbits.TRISB6 = 0;
     TRISAbits.TRISA2 = 0;
+}
+
+uint16_t performMeasurement(){
+    ADCON0bits.AD1ON = ON; //adc on
+    TEMPERATURE_POWER = ON; 
+    float temperature = 0;
+    float temperatureToTransmit = 0;
+    __delay_ms(20);
+    for(int i = 0; i < SAMPLE_SIZE; i++){
+        temperature = readTemperatureSensor() +temperature;
+    }
+    TEMPERATURE_POWER = OFF;
+    ADCON0bits.AD1ON = OFF; //adc off
+    //getting average and then multiply by 10 to preserve miliunits, which is then back converted on receiver
+    temperatureToTransmit = (temperature/SAMPLE_SIZE)*10;
+    
+    return (uint16_t)temperatureToTransmit;
 }
 
 float readTemperatureSensor(){
