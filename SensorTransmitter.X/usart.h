@@ -13,7 +13,6 @@ extern "C" {
 #endif
 
 #include <xc.h>
-#include <pic16f88.h>
 #include "hardwareDefinitions.h"
     /*Defines*/
 #define BAUD 300    
@@ -45,8 +44,8 @@ extern "C" {
 	#define RX_PIN TRISBbits.TRISB2
 	#define TX_PIN TRISBbits.TRISB5
 #else
-	#define RX_PIN TRISC7
-	#define TX_PIN TRISC6
+	#define RX_PIN TRISB5
+	#define TX_PIN TRISB7
 #endif
 
 /**
