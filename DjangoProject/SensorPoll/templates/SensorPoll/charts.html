@@ -52,7 +52,7 @@
             // Chart data records -- each entry in this array corresponds to a point on
             // the chart.
             data: [
-                //FIXME Make the address filter based on some table of ranges somewhere
+                //FIXME Make the address filter based on some table of ranges somewhere 
                 {% for packet in averaged_packs %}
                     {% if packet.address < 11 %}
                         {time: '{{packet.time_stamp|date:"c"}}', '{{packet.address}}': {{packet.data}} },
